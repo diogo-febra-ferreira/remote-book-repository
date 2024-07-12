@@ -9,4 +9,8 @@ router.get('/', function (req, res, next) {
     res.sendFile(path.join(__dirname, '../public/webpages/bookList.html'));
 });
 
+router.get('/lorem-ipsum', function (req, res, next) {
+    res.sendFile(path.join(__dirname, '../public/books/lorem_ipsum.pdf'));
+});
+
 module.exports = router;
