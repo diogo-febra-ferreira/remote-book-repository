@@ -1,11 +1,12 @@
 const express = require('express');
+require('dotenv').config()
 
 const indexRouter = require('./routes/index');
 const booksRouter = require('./routes/books');
 
 const app = express();
 //TODO put this in the env
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use('/', indexRouter);
 app.use('/books', booksRouter);
