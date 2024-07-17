@@ -11,10 +11,9 @@
     <p>Booklist</p>
 
     <a href="/">Home</a>
+    <br><br>
 
-    <a href="/books/lorem-ipsum">Lorem ipsum</a>
-
-    <p id="bookInfo"></p>
+    <div id="bookLinksContainer" style="background-color:aquamarine;"></div>
 </body>
 
 </html>
@@ -22,7 +21,7 @@
 
 <script>
 
-    function getBookTitles() {
+    function getBookList() {
         const baseUrl = window.location.origin;
         const apiPath = baseUrl + "/books/info";
 
@@ -34,12 +33,19 @@
                 return response.json();
             })
             .then(data => {
-                document.getElementById("bookInfo").textContent = JSON.stringify(data);
+                const linksContainer = document.getElementById("bookLinksContainer");
+                data.forEach(book => {
+                    const link = document.createElement("a");
+                    link.href = '/books/name/' + book;
+                    link.textContent = book;
+                    linksContainer.appendChild(link);
+                    linksContainer.appendChild(document.createElement("br"));
+                });
             })
             .catch(error => {
                 console.error('There has been a problem with your fetch operation:', error);
             });
     }
+    getBookList();
 
-    getBookTitles();
 </script>

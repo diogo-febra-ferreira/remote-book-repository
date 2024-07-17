@@ -10,8 +10,10 @@ router.get('/', function (req, res, next) {
     res.sendFile(path.join(__dirname, '../public/webpages/bookList.html'));
 });
 
-router.get('/lorem-ipsum', function (req, res, next) {
-    res.sendFile(path.join(__dirname, '../public/books/lorem_ipsum.pdf'));
+router.get('/name/:bookName', function (req, res, next) {
+    const bookName = req.params.bookName;
+    
+    res.sendFile(path.join(__dirname, '../public/books/'+bookName));
 });
 
 router.get('/info', async function (req, res, next) {
