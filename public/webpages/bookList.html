@@ -10,6 +10,11 @@
     <h1>Booklist</h1>
     <p>Booklist</p>
 
+    <form id="upload-form" enctype="multipart/form-data" style="background-color:blanchedalmond;">
+        <input type="file" name="file" required>
+        <button type="submit">Upload</button>
+    </form>
+
     <a href="/">Home</a>
     <br><br>
 
@@ -21,8 +26,30 @@
 
 <script>
 
+    const baseUrl = window.location.origin;
+
+    function addUploadOnClick() {
+        document.getElementById('upload-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            fetch('/books/upload', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.text())
+                .then(data => {
+                    alert(data);
+                    setTimeout(() => {
+                        getBookList();
+                    }, 1000);
+                })
+                .catch(error => console.error('Error:', error));
+        })
+    }
+    addUploadOnClick();
+
     function getBookList() {
-        const baseUrl = window.location.origin;
         const apiPath = baseUrl + "/books/info";
 
         fetch(apiPath)
@@ -34,6 +61,8 @@
             })
             .then(data => {
                 const linksContainer = document.getElementById("bookLinksContainer");
+                linksContainer.innerHTML = "";
+
                 data.forEach(book => {
                     const link = document.createElement("a");
                     link.href = '/books/name/' + book;

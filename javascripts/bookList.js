@@ -21,4 +21,6 @@ function getBooksInfo() {
     });
 }
 
-module.exports = getBooksInfo;
+module.exports = {
+    getBooksInfo,
+};
