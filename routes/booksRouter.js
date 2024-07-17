@@ -3,6 +3,7 @@ const path = require('path');
 const router = express.Router();
 const fs = require('fs');
 
+//TODO add try catch on every endpoint so that the app never crashes
 
 const multer = require('multer');
 const upload = multer({ dest: path.join(__dirname, '../public/books/') }); // Specify destination folder for uploaded files
@@ -54,6 +55,32 @@ router.post('/upload', upload.single('file'), (req, res) => {
         console.error(error.message);
         res.status(500).send(error.message);
     }
+});
+
+// remove a book by its name
+router.delete('/remove/:bookName', async function (req, res, next) {
+    //TODO none of these errors work, it just always gives a generic error, but at least it doesn't crash the server
+
+    const bookName = req.params.bookName;
+
+    const filePath = path.join(__dirname, '../public/books/', bookName);
+
+    // Attempt to delete the book file
+    fs.unlink(filePath, (err) => {
+        if (err) {
+            if (err.code === 'ENOENT') {
+                res.status(404).send('The book was not found, please check the name and try again.');
+
+            } else {
+                console.error(err);
+                res.status(500).send('An error occurred while trying to remove the book.');
+
+            }
+        } else {
+            res.status(200).send('Book removed successfully.');
+        }
+    });
+
 });
 
 module.exports = router;
