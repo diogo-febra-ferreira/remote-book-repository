@@ -1,0 +1,13 @@
+FROM node:slim
+
+WORKDIR /express-docker
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+CMD ["node", "app.js"]
+
+EXPOSE 3000
