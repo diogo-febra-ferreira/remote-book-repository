@@ -14,13 +14,18 @@ run application with:
 .env
 ==========
 
-**PORT=** port in which the app will run, will default to 300 if left empty.
+**PORT=** port in which the app will run, will default to 3000 if left empty.
 
 docker
 ==========
 
-build docker image:
+to use the docker compose and bind your folder as a a volume, just use
+`docker compose up`
+
+alternatively:
+
+to build docker image:
 `docker build -f Dockerfile -t remote-book .`
 
-run docker container from image:
+then, to run docker container from image:
 `docker run -d -p 3000:3000 --name remote-book-container remote-book`
